@@ -51,29 +51,29 @@
         </dependency>
 
 
-<!--        &lt;!&ndash; 接入ollama &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>dev.langchain4j</groupId>-->
-<!--            <artifactId>langchain4j-ollama-spring-boot-starter</artifactId>-->
-<!--        </dependency>-->
+        <!-- 接入ollama -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-ollama-spring-boot-starter</artifactId>
+        </dependency>
 
-<!--        &lt;!&ndash; 接入阿里云百炼平台 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>dev.langchain4j</groupId>-->
-<!--            <artifactId>langchain4j-community-dashscope-spring-boot-starter</artifactId>-->
-<!--        </dependency>-->
+        <!-- 接入阿里云百炼平台 -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-community-dashscope-spring-boot-starter</artifactId>
+        </dependency>
 
-<!--        &lt;!&ndash;langchain4j高级功能&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>dev.langchain4j</groupId>-->
-<!--            <artifactId>langchain4j-spring-boot-starter</artifactId>-->
-<!--        </dependency>-->
+        <!--langchain4j高级功能-->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-spring-boot-starter</artifactId>
+        </dependency>
 
-<!--        &lt;!&ndash; Spring Boot Starter Data MongoDB &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-mongodb</artifactId>-->
-<!--        </dependency>-->
+        <!-- Spring Boot Starter Data MongoDB -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
 
 <!--        &lt;!&ndash; Mysql Connector &ndash;&gt;-->
 <!--        <dependency>-->
