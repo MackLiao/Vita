@@ -1,20 +1,20 @@
 package com.healthcare.java.ai.langchain4j.assistant;
 
+
+import dev.langchain4j.service.MemoryId;
+import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.service.V;
 import dev.langchain4j.service.spring.AiService;
-import dev.langchain4j.service.spring.AiServiceWiringMode;
 
 import static dev.langchain4j.service.spring.AiServiceWiringMode.EXPLICIT;
 
 @AiService(
         wiringMode = EXPLICIT,
         chatModel = "qwenChatModel",
-        chatMemory = "chatMemory"
+        chatMemoryProvider = "chatMemoryProviderVita"
 )
-public interface MemoryChatAssistant {
+public interface VitaAgent {
 
-    @UserMessage("You are a good friend mine, respond with your southern accent. {{message}}")
-    String chat(@V("message") String message);
-
+    @SystemMessage(fromResource = "Vita-prompt-template.txt")
+    String chat(@MemoryId Long memoryId, @UserMessage String userMessage);
 }
