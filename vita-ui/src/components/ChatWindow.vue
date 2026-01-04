@@ -117,7 +117,7 @@ const sendRequest = (message) => {
   scrollToBottom();
 
   axios
-      .post('/api/Vita/chat', { memoryId: uuid.value, message }, {
+      .post('/api/vita/chat', { memoryId: uuid.value, message }, {
         responseType: 'stream',
         onDownloadProgress: (e) => {
           const fullText = e.event.target.responseText;
