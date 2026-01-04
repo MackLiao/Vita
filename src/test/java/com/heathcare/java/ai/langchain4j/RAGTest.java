@@ -60,7 +60,7 @@ public class RAGTest {
     @Test
     public void testDocumentSplitter() {
 
-        Document document = FileSystemDocumentLoader.loadDocument("C:/Users/a/Desktop/小智医疗/knowledge/人工智能.md");
+        Document document = FileSystemDocumentLoader.loadDocument("RAGDocuments/MayoClinic.md");
 
         InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 

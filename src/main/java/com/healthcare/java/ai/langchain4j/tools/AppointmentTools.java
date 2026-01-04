@@ -15,10 +15,41 @@ public class AppointmentTools {
 
 
     @Tool(
+            name = "Check Appointment Availability",
+            value = "Check whether appointment slots are available based on department name, "
+                    + "date, time period, and doctor name, and return the result to the user."
+    )
+    public boolean queryDepartment(
+            @P(value = "Department Name") String name,
+            @P(value = "Date") String date,
+            @P(value = "Time (valid values: Morning, Afternoon)") String time,
+            @P(value = "Doctor Name", required = false) String doctorName
+    ) {
+
+        System.out.println("Checking appointment availability");
+        System.out.println("Department Name: " + name);
+        System.out.println("Date: " + date);
+        System.out.println("Time: " + time);
+        System.out.println("Doctor Name: " + doctorName);
+
+        // TODO Maintain doctor scheduling info:
+        // If no doctor name is specified:
+        //   Check whether any doctor is available under the given conditions
+        //   (return true if available, otherwise false)
+
+        // If a doctor name is specified:
+        //   Check whether the doctor has a schedule (return false if none)
+        //   If the doctor has a schedule, check whether the slot is fully booked
+        //   (return false if full, true if available)
+
+        return true;
+    }
+
+    @Tool(
         name = "Book Appointment",
-        value = "Based on the given parameters, CALL the tool method queryDepartment first to check availability "
+        value = "Based on the given parameters, you MUST call the tool method queryDepartment first to check availability "
               + "and immediately reply to the user whether it is available. Then have the user confirm all "
-              + "appointment details, and only proceed with booking after confirmation. "
+              + "appointment details, and ONLY proceed with booking after confirmation. "
               + "If the user does not provide a specific doctor name, retrieve one from the vector database."
     )
     public String bookAppointment(Appointment appointment){
@@ -63,35 +94,5 @@ public class AppointmentTools {
     }
 
 
-    @Tool(
-        name = "Check Appointment Availability",
-        value = "Check whether appointment slots are available based on department name, "
-              + "date, time period, and doctor name, and return the result to the user."
-    )
-    public boolean queryDepartment(
-            @P(value = "Department Name") String name,
-            @P(value = "Date") String date,
-            @P(value = "Time (valid values: Morning, Afternoon)") String time,
-            @P(value = "Doctor Name", required = false) String doctorName
-    ) {
-
-        System.out.println("Checking appointment availability");
-        System.out.println("Department Name: " + name);
-        System.out.println("Date: " + date);
-        System.out.println("Time: " + time);
-        System.out.println("Doctor Name: " + doctorName);
-
-        // TODO Maintain doctor scheduling info:
-        // If no doctor name is specified:
-        //   Check whether any doctor is available under the given conditions
-        //   (return true if available, otherwise false)
-
-        // If a doctor name is specified:
-        //   Check whether the doctor has a schedule (return false if none)
-        //   If the doctor has a schedule, check whether the slot is fully booked
-        //   (return false if full, true if available)
-
-        return true;
-    }
 
 }

@@ -2,11 +2,14 @@ package com.healthcare.java.ai.langchain4j.config;
 
 import com.healthcare.java.ai.langchain4j.store.MongoChatMemoryStore;
 import com.mongodb.client.MongoClient;
+import dev.langchain4j.community.model.dashscope.QwenTokenizer;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.loader.FileSystemDocumentLoader;
+import dev.langchain4j.data.document.splitter.DocumentByParagraphSplitter;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import dev.langchain4j.model.embedding.onnx.HuggingFaceTokenizer;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
@@ -15,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 public class VitaAgentConfig {
@@ -36,15 +37,25 @@ public class VitaAgentConfig {
 
     @Bean
     ContentRetriever contentRetrieverVita() {
-        // Use FileSystemDocumentLoader to load documents
-        // Use default parser to parse documents
-        Document document1 = FileSystemDocumentLoader.loadDocument("C:/Users/a/Desktop/小智医疗/knowledge/医院信息.md");
-        Document document2 = FileSystemDocumentLoader.loadDocument("C:/Users/a/Desktop/小智医疗/knowledge/科室信息.md");
-        Document document3 = FileSystemDocumentLoader.loadDocument("C:/Users/a/Desktop/小智医疗/knowledge/神经内科.md");
-        List<Document> documents = Arrays.asList(document1, document2, document3);
+
+        Document document = FileSystemDocumentLoader.loadDocument("RAGDocuments/MayoClinic.md");
 
         InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
-        EmbeddingStoreIngestor.ingest(documents, embeddingStore);
+
+        //QwenTokenizer tokenizer = new QwenTokenizer(System.getenv("DASH_SCOPE_API_KEY"), "qwen-max");
+
+        DocumentByParagraphSplitter documentSplitter = new DocumentByParagraphSplitter(
+                300,
+                30,
+                new HuggingFaceTokenizer());
+
+
+        EmbeddingStoreIngestor
+                .builder()
+                .embeddingStore(embeddingStore)
+                .documentSplitter(documentSplitter)
+                .build()
+                .ingest(document);
 
         return EmbeddingStoreContentRetriever.from(embeddingStore);
 
