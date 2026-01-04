@@ -9,9 +9,11 @@ import dev.langchain4j.data.document.splitter.DocumentByParagraphSplitter;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.HuggingFaceTokenizer;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,30 +37,48 @@ public class VitaAgentConfig {
                 .build();
     }
 
+//    @Bean
+//    ContentRetriever contentRetrieverVita() {
+//
+//        Document document = FileSystemDocumentLoader.loadDocument("RAGDocuments/MayoClinic.md");
+//
+//        InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+//
+//        //QwenTokenizer tokenizer = new QwenTokenizer(System.getenv("DASH_SCOPE_API_KEY"), "qwen-max");
+//
+//        DocumentByParagraphSplitter documentSplitter = new DocumentByParagraphSplitter(
+//                300,
+//                30,
+//                new HuggingFaceTokenizer());
+//
+//
+//        EmbeddingStoreIngestor
+//                .builder()
+//                .embeddingStore(embeddingStore)
+//                .documentSplitter(documentSplitter)
+//                .build()
+//                .ingest(document);
+//
+//        return EmbeddingStoreContentRetriever.from(embeddingStore);
+//
+//    }
+
+    @Autowired
+    EmbeddingModel embeddingModel;
+
+    @Autowired
+    EmbeddingStore embeddingStore;
+
     @Bean
-    ContentRetriever contentRetrieverVita() {
+    ContentRetriever contentRetrieverVitaPinecone() {
 
-        Document document = FileSystemDocumentLoader.loadDocument("RAGDocuments/MayoClinic.md");
-
-        InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
-
-        //QwenTokenizer tokenizer = new QwenTokenizer(System.getenv("DASH_SCOPE_API_KEY"), "qwen-max");
-
-        DocumentByParagraphSplitter documentSplitter = new DocumentByParagraphSplitter(
-                300,
-                30,
-                new HuggingFaceTokenizer());
-
-
-        EmbeddingStoreIngestor
+        return EmbeddingStoreContentRetriever
                 .builder()
+                .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
-                .documentSplitter(documentSplitter)
-                .build()
-                .ingest(document);
-
-        return EmbeddingStoreContentRetriever.from(embeddingStore);
-
+                .maxResults(1)
+                .minScore(0.8)
+                .build();
     }
 
 
